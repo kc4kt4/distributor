@@ -1,0 +1,19 @@
+distribution:
+  bd:
+    datasource:
+      host: 192.168.99.100
+      port: 5432
+      user: admin
+      password: password
+      schema: public
+      database: postgres
+      ddlAuto: validate
+      hikari:
+        minPoolSize: 5
+        maxPoolSize: 20
+        preferredTestQuery: select 1
+  bik:
+    host: http://www.bik-info.ru/base
+
+server:
+  port: 8080
