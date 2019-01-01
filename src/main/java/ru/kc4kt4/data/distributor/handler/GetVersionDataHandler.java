@@ -10,7 +10,7 @@ import ru.kc4kt4.data.distributor.repository.DataVersionRepository;
 import java.util.Optional;
 
 @Service
-public class VersionStatusHandler {
+public class GetVersionDataHandler {
 
     @Autowired
     private BankDetailClient bankDetailClient;

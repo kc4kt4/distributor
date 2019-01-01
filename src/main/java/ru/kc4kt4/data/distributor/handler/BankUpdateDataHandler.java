@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class UpdateBankDetailHandler {
+public class BankUpdateDataHandler {
 
     @Value("${distribution.bik.host}")
     private String host;
