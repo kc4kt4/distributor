@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import ru.kc4kt4.data.distributor.annotations.JsonRestController;
 import ru.kc4kt4.data.distributor.handler.BankInfoHandler;
 import ru.kc4kt4.data.distributor.handler.BankStatusHandler;
 import ru.kc4kt4.data.distributor.handler.BankUpdateDataHandler;
@@ -11,7 +12,7 @@ import ru.kc4kt4.data.distributor.response.BankInfoResponse;
 import ru.kc4kt4.data.distributor.response.BankStatusResponse;
 import ru.kc4kt4.data.distributor.response.UpdateBaseResponse;
 
-@RestController
+@JsonRestController
 @RequestMapping(value = "/biks", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
         produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class BikController {
@@ -22,12 +23,11 @@ public class BikController {
     @Autowired
     private BankUpdateDataHandler bankUpdateDataHandler;
     @Autowired
-    private BankStatusHandler bankStatusHandler;
-    @Autowired
     private BankInfoHandler bankInfoHandler;
+    @Autowired
+    private BankStatusHandler bankStatusHandler;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    @ResponseBody
     public UpdateBaseResponse updateData() {
         return bankUpdateDataHandler.handleRequest();
     }

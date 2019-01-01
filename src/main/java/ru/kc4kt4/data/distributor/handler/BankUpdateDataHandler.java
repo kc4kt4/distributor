@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import ru.kc4kt4.data.distributor.exception.InternalServerErrorException;
 import ru.kc4kt4.data.distributor.response.UpdateBaseResponse;
 import ru.kc4kt4.data.distributor.dto.Biks;
 import ru.kc4kt4.data.distributor.entity.BankDetail;
 import ru.kc4kt4.data.distributor.entity.DataVersion;
-import ru.kc4kt4.data.distributor.exception.ErrorConnectException;
+import ru.kc4kt4.data.distributor.exception.ConnectionException;
 import ru.kc4kt4.data.distributor.repository.BankDetailRepository;
 import ru.kc4kt4.data.distributor.repository.DataVersionRepository;
 
@@ -43,21 +44,26 @@ public class BankUpdateDataHandler {
                 .toString(), Biks.class);
 
         if (biks == null || Arrays.asList(biks.getBik()).isEmpty()) {
-            throw new ErrorConnectException("Не удается получить данные о актуальной базе");
+            throw new ConnectionException("Не удается получить данные о актуальной базе");
         }
 
         Optional<DataVersion> dataVersionOptional = dataVersionRepository.findById("bik");
 
         String versionStatus;
         if (!dataVersionOptional.isPresent() || !Objects.equals(dataVersionOptional.get().getVersion(), biks.getVersion())) {
-            DataVersion dataVersion = createAndUpdateEntity(biks.getVersion());
-            BankDetail[] bankDetails = mapper.convertValue(biks.getBik(), BankDetail[].class);
-            log.debug(String.format("Сохраняем актуализированные данные в базу данных %s",
-                    dataVersion.getDataName()));
-            bankDetailRepository.saveAll(Arrays.asList(bankDetails));
-            log.debug(String.format("Данные в бахе данных %s успешно обновлены",
-                    dataVersion.getDataName()));
-            versionStatus = "обновлена";
+            try {
+                DataVersion dataVersion = createAndUpdateEntity(biks.getVersion());
+                BankDetail[] bankDetails = mapper.convertValue(biks.getBik(), BankDetail[].class);
+                log.debug(String.format("Сохраняем актуализированные данные в базу данных %s",
+                        dataVersion.getDataName()));
+                bankDetailRepository.saveAll(Arrays.asList(bankDetails));
+                log.debug(String.format("Данные в бахе данных %s успешно обновлены",
+                        dataVersion.getDataName()));
+                versionStatus = "обновлена";
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                throw new InternalServerErrorException();
+            }
         } else {
             versionStatus = "не требует обновления";
         }
