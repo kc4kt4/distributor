@@ -1,4 +1,4 @@
-package ru.kc4kt4.data.distributor.config;
+package ru.kc4kt4.data.distributor.test.config;
 
 import io.swagger.annotations.Api;
 import org.springframework.context.annotation.Bean;

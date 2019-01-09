@@ -1,4 +1,4 @@
-package ru.kc4kt4.data.distributor.controller;
+package ru.kc4kt4.data.distributor.test.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,6 +16,8 @@ import ru.kc4kt4.data.distributor.handler.BankUpdateDataHandler;
 import ru.kc4kt4.data.distributor.response.BankInfoResponse;
 import ru.kc4kt4.data.distributor.response.BankStatusResponse;
 import ru.kc4kt4.data.distributor.response.UpdateBaseResponse;
+
+import javax.validation.constraints.Pattern;
 
 @Api("Api: Банки")
 @JsonRestController
@@ -42,14 +44,14 @@ public class BikController {
     @ApiOperation(value = "Получить данные по банку по БИКу")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public BankInfoResponse getBankById(@ApiParam(value = "Бик банка", required = true)
-                                            @PathVariable String id) {
+                                            @PathVariable @Pattern(regexp = "\\d{9}") String id) {
         return bankInfoHandler.handleRequest(id);
     }
 
     @ApiOperation(value = "Проверить, существует ли банк в базе с указанным БИКом")
     @RequestMapping(value = "/existence/{id}", method = RequestMethod.GET)
     public BankStatusResponse isBankExist(@ApiParam(value = "Бик банка", required = true)
-                                              @PathVariable String id) {
+                                              @PathVariable @Pattern(regexp = "\\d{9}") String id) {
         return bankStatusHandler.handleRequest(id);
     }
 }

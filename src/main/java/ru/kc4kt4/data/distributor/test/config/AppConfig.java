@@ -1,9 +1,8 @@
-package ru.kc4kt4.data.distributor.config;
+package ru.kc4kt4.data.distributor.test.config;
 
 import feign.Feign;
 import feign.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cloud.openfeign.support.SpringMvcContract;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

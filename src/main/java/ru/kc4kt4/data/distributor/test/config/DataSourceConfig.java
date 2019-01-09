@@ -1,4 +1,4 @@
-package ru.kc4kt4.data.distributor.config;
+package ru.kc4kt4.data.distributor.test.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -10,12 +10,13 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import ru.kc4kt4.data.distributor.config.properties.DataSourceProperties;
+import ru.kc4kt4.data.distributor.test.config.properties.DataSourceProperties;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -23,6 +24,7 @@ import java.util.HashMap;
 @Configuration
 @EnableConfigurationProperties
 @EnableTransactionManagement
+@Profile({"!test"})
 public class DataSourceConfig {
     protected final DataSourceProperties properties;
 
@@ -31,7 +33,7 @@ public class DataSourceConfig {
         this.properties = properties;
     }
 
-    @Bean
+    @Bean("dataSource")
     public DataSource dataSource() {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDriverClassName(org.postgresql.Driver.class.getName());

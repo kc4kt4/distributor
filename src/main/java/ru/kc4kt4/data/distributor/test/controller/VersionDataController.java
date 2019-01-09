@@ -1,4 +1,4 @@
-package ru.kc4kt4.data.distributor.controller;
+package ru.kc4kt4.data.distributor.test.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
