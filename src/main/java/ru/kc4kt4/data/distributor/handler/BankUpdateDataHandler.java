@@ -7,14 +7,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-import ru.kc4kt4.data.distributor.exception.InternalServerErrorException;
-import ru.kc4kt4.data.distributor.response.UpdateBaseResponse;
 import ru.kc4kt4.data.distributor.dto.Biks;
 import ru.kc4kt4.data.distributor.entity.BankDetail;
 import ru.kc4kt4.data.distributor.entity.DataVersion;
 import ru.kc4kt4.data.distributor.exception.ConnectionException;
+import ru.kc4kt4.data.distributor.exception.InternalServerErrorException;
+import ru.kc4kt4.data.distributor.feign.BankDetailClient;
 import ru.kc4kt4.data.distributor.repository.BankDetailRepository;
 import ru.kc4kt4.data.distributor.repository.DataVersionRepository;
+import ru.kc4kt4.data.distributor.response.UpdateBaseResponse;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -35,6 +36,8 @@ public class BankUpdateDataHandler {
     private BankDetailRepository bankDetailRepository;
     @Autowired
     private ObjectMapper mapper;
+    @Autowired
+    private BankDetailClient bankDetailClient;
 
     @Transactional
     public UpdateBaseResponse handleRequest() {

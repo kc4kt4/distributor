@@ -1,8 +1,12 @@
 package ru.kc4kt4.data.distributor.test.config;
 
+import feign.Feign;
+import feign.Logger;
 import org.flywaydb.core.Flyway;
 import org.hibernate.cfg.AvailableSettings;
 import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.cloud.openfeign.support.SpringMvcContract;
 import org.springframework.context.annotation.*;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -26,6 +30,11 @@ public class TestConfiguration {
         return DataSourceBuilder
                 .create()
                 .build();
+    }
+
+    @Bean
+    public TestRestTemplate testRestTemplate() {
+        return new TestRestTemplate();
     }
 
     @Bean(initMethod = "migrate")

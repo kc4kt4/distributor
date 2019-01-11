@@ -1,4 +1,4 @@
-package ru.kc4kt4.data.distributor.test.config.properties;
+package ru.kc4kt4.data.distributor.config.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

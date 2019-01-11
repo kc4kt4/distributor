@@ -21,8 +21,7 @@ public class UpdateBaseResponse implements Serializable {
     @ApiModelProperty(value = "Статус обновления версии БД")
     private String versionStatus;
 
-    public UpdateBaseResponse(String version, String actualVersion) {
+    public UpdateBaseResponse(String version) {
         this.version = version;
-        this.actualVersion = actualVersion;
     }
 }

@@ -1,3 +1,2 @@
-distribution:
-  bik:
-    host: http://www.bik-info.ru/base
+server:
+  port: 8887

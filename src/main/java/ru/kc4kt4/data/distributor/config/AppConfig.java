@@ -1,4 +1,4 @@
-package ru.kc4kt4.data.distributor.test.config;
+package ru.kc4kt4.data.distributor.config;
 
 import feign.Feign;
 import feign.Logger;

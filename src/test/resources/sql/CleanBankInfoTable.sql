@@ -1,0 +1,1 @@
+truncate bank_detail

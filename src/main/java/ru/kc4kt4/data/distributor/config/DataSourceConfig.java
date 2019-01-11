@@ -1,4 +1,4 @@
-package ru.kc4kt4.data.distributor.test.config;
+package ru.kc4kt4.data.distributor.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -16,7 +16,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import ru.kc4kt4.data.distributor.test.config.properties.DataSourceProperties;
+import ru.kc4kt4.data.distributor.config.properties.DataSourceProperties;
 
 import javax.sql.DataSource;
 import java.util.HashMap;

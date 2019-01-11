@@ -1,4 +1,4 @@
-package ru.kc4kt4.data.distributor.test.config;
+package ru.kc4kt4.data.distributor.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.flywaydb.core.Flyway;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
-import ru.kc4kt4.data.distributor.test.config.properties.DataSourceProperties;
+import ru.kc4kt4.data.distributor.config.properties.DataSourceProperties;
 
 import javax.sql.DataSource;
 
