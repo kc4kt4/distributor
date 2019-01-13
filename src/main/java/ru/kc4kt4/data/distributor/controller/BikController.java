@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import ru.kc4kt4.data.distributor.annotations.ExecutionTimeReport;
 import ru.kc4kt4.data.distributor.annotations.JsonRestController;
 import ru.kc4kt4.data.distributor.handler.BankInfoHandler;
 import ru.kc4kt4.data.distributor.handler.BankStatusHandler;
@@ -41,6 +42,7 @@ public class BikController {
                     paramType = "header",
                     defaultValue = MediaType.APPLICATION_JSON_UTF8_VALUE)
     })
+    @ExecutionTimeReport
     public UpdateBaseResponse updateData() {
         return bankUpdateDataHandler.handleRequest();
     }

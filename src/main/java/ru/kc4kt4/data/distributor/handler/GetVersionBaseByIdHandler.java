@@ -16,7 +16,7 @@ public class GetVersionBaseByIdHandler {
 
     @Autowired
     private DataVersionRepository dataVersionRepository;
-    
+
     public UpdateBaseResponse handleRequest(String id) {
         String version;
         try {
