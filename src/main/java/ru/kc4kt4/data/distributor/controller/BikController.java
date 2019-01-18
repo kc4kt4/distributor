@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ru.kc4kt4.data.distributor.annotations.ExecutionTimeReport;
 import ru.kc4kt4.data.distributor.annotations.JsonRestController;
 import ru.kc4kt4.data.distributor.handler.BankInfoHandler;
-import ru.kc4kt4.data.distributor.handler.BankStatusHandler;
 import ru.kc4kt4.data.distributor.handler.BankUpdateDataHandler;
 import ru.kc4kt4.data.distributor.response.BankInfoResponse;
-import ru.kc4kt4.data.distributor.response.BankStatusResponse;
 import ru.kc4kt4.data.distributor.response.UpdateBaseResponse;
 
 import javax.validation.constraints.Pattern;
@@ -31,8 +29,6 @@ public class BikController {
     private BankUpdateDataHandler bankUpdateDataHandler;
     @Autowired
     private BankInfoHandler bankInfoHandler;
-    @Autowired
-    private BankStatusHandler bankStatusHandler;
 
     @ApiOperation(value = "Обновить данные по БИКам в базе")
     @RequestMapping(value = "/", method = RequestMethod.POST)
@@ -58,18 +54,5 @@ public class BikController {
     public BankInfoResponse getBankById(@ApiParam(value = "Бик банка", required = true)
                                         @PathVariable @Pattern(regexp = "\\d{9}") String id) {
         return bankInfoHandler.handleRequest(id);
-    }
-
-    @ApiOperation(value = "Проверить, существует ли банк в базе с указанным БИКом")
-    @RequestMapping(value = "/existence/{id}", method = RequestMethod.GET)
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Content-Type",
-                    value = "Content-Type",
-                    paramType = "header",
-                    defaultValue = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    })
-    public BankStatusResponse isBankExist(@ApiParam(value = "Бик банка", required = true)
-                                          @PathVariable @Pattern(regexp = "\\d{9}") String id) {
-        return bankStatusHandler.handleRequest(id);
     }
 }
