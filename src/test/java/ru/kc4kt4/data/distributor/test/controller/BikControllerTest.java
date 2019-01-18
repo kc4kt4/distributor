@@ -15,6 +15,7 @@ import ru.kc4kt4.data.distributor.response.BankInfoResponse;
 import ru.kc4kt4.data.distributor.response.UpdateBaseResponse;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -45,6 +46,7 @@ public class BikControllerTest extends AbstractControllerTest {
         ResponseEntity<UpdateBaseResponse> secondResponse = updateBikExchange();
 
         assertResponse(secondResponse);
+        assertNotEquals(0, bankDetailRepository.findAll().size());
         assertEquals(BASE_UPDATE_NO_NEED, secondResponse.getBody().getVersionStatus());
         assertEquals(BASE_NAME, secondResponse.getBody().getBaseName());
     }
