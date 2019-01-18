@@ -12,7 +12,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ru.kc4kt4.data.distributor.entity.BankDetail;
 import ru.kc4kt4.data.distributor.repository.BankDetailRepository;
 import ru.kc4kt4.data.distributor.response.BankInfoResponse;
-import ru.kc4kt4.data.distributor.response.BankStatusResponse;
 import ru.kc4kt4.data.distributor.response.UpdateBaseResponse;
 
 import static org.junit.Assert.assertEquals;
@@ -23,7 +22,6 @@ public class BikControllerTest extends AbstractControllerTest {
     private static final String PATH_TO_CREATE_BANK_INFO_DATA = "classpath:sql/CreateBankInfo.sql";
     private static final String PATH_TO_SCRIPT_TRUNCATE_TABLE = "classpath:sql/CleanBankInfoTable.sql";
     private static final String BIK = "046577909";
-    private static final String BIK_CHECK_EXIST_PATH = "/existence";
     private static final String BASE_CONTROLLER_URL = "/biks";
     private static final String SLASH = "/";
     private static final String BASE_UPDATE_SUCCESS = "База данных БИКов обновлена";
@@ -70,22 +68,7 @@ public class BikControllerTest extends AbstractControllerTest {
                         BankInfoResponse.class);
 
         assertResponse(response);
-        
         BankDetail findedBankInfo = bankDetailRepository.findById(BIK).get();
         assertEquals(findedBankInfo, mapper.convertValue(response.getBody().getBankInfo(), BankDetail.class));
-    }
-
-    @Test
-    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = PATH_TO_CREATE_BANK_INFO_DATA)
-    @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = PATH_TO_SCRIPT_TRUNCATE_TABLE)
-    public void isBankExistTest() {
-        ResponseEntity<BankStatusResponse> response = restTemplate
-                .exchange(createURLWithPort(BASE_CONTROLLER_URL + BIK_CHECK_EXIST_PATH + SLASH + BIK),
-                        HttpMethod.GET,
-                        createRequestEntity(null),
-                        BankStatusResponse.class);
-
-        assertResponse(response);
-        assertEquals(Boolean.TRUE, response.getBody().isBankExist());
     }
 }
