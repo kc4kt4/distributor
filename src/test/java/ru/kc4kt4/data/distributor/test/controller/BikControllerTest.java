@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
@@ -18,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class BikControllerTest extends AbstractControllerTest {
     private static final String PATH_TO_CREATE_BANK_INFO_DATA = "classpath:sql/CreateBankInfo.sql";
     private static final String PATH_TO_SCRIPT_TRUNCATE_TABLE = "classpath:sql/CleanBankInfoTable.sql";
@@ -33,6 +34,9 @@ public class BikControllerTest extends AbstractControllerTest {
     private BankDetailRepository bankDetailRepository;
     @Autowired
     private ObjectMapper mapper;
+
+    @LocalServerPort
+    protected int port;
 
     @Test
     @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = PATH_TO_SCRIPT_TRUNCATE_TABLE)
@@ -53,7 +57,7 @@ public class BikControllerTest extends AbstractControllerTest {
 
     private ResponseEntity<UpdateBaseResponse> updateBikExchange() {
         return restTemplate
-                .exchange(createURLWithPort(BASE_CONTROLLER_URL + SLASH),
+                .exchange(createURLWithPort(port,BASE_CONTROLLER_URL + SLASH),
                         HttpMethod.POST,
                         createRequestEntity(null),
                         UpdateBaseResponse.class);
@@ -64,7 +68,7 @@ public class BikControllerTest extends AbstractControllerTest {
     @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = PATH_TO_SCRIPT_TRUNCATE_TABLE)
     public void getBankByIdTest() {
         ResponseEntity<BankInfoResponse> response = restTemplate
-                .exchange(createURLWithPort(BASE_CONTROLLER_URL + SLASH + BIK),
+                .exchange(createURLWithPort(port,BASE_CONTROLLER_URL + SLASH + BIK),
                         HttpMethod.GET,
                         createRequestEntity(null),
                         BankInfoResponse.class);

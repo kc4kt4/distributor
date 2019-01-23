@@ -1,7 +1,6 @@
 package ru.kc4kt4.data.distributor.test.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.annotation.DirtiesContext;
@@ -17,10 +16,7 @@ public abstract class AbstractControllerTest extends AbstractTest {
     @Autowired
     protected TestRestTemplate restTemplate;
 
-    @Value("${server.port}")
-    protected int port;
-
-    protected String createURLWithPort(String uri) {
+    protected String createURLWithPort(int port, String uri) {
         return HOST_PATH + port + uri;
     }
 
